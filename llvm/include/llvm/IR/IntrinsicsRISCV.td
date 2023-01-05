@@ -1622,7 +1622,7 @@ let TargetPrefix = "riscv" in {
   }
 
   defm div : ISAXAIntrinsic<[llvm_i32_ty,llvm_i32_ty],
-                           [llvm_i32_ty,llvm_i32_ty],
-                           [IntrNoMem]>;
+                            [llvm_i32_ty,llvm_i32_ty],
+                            [IntrNoMem]>;
 
 } // TargetPrefix = "riscv"

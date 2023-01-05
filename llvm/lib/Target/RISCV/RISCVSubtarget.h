@@ -90,6 +90,7 @@ private:
   bool HasStdExtZicboz = false;
   bool HasStdExtZicbop = false;
   bool HasStdExtZmmul = false;
+  bool HasNonStdExtISAXA = false;
   bool HasRV64 = false;
   bool IsRV32E = false;
   bool EnableLinkerRelax = false;
@@ -186,6 +187,7 @@ public:
   bool hasStdExtZicboz() const { return HasStdExtZicboz; }
   bool hasStdExtZicbop() const { return HasStdExtZicbop; }
   bool hasStdExtZmmul() const { return HasStdExtZmmul; }
+  bool hasNonStdExtISAXA() const { return HasNonStdExtISAXA; }
   bool is64Bit() const { return HasRV64; }
   bool isRV32E() const { return IsRV32E; }
   bool enableLinkerRelax() const { return EnableLinkerRelax; }

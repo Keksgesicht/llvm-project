@@ -1610,3 +1610,25 @@ def int_riscv_sm4ed      : ScalarCryptoByteSelectAny;
 def int_riscv_sm3p0      : ScalarCryptoGprIntrinsicAny;
 def int_riscv_sm3p1      : ScalarCryptoGprIntrinsicAny;
 } // TargetPrefix = "riscv"
+
+let TargetPrefix = "riscv" in {
+
+  multiclass ISAXAIntrinsic<list<LLVMType> ret_types,
+                            list<LLVMType> param_types,
+                            list<IntrinsicProperty> intr_properties> {
+    def "int_riscv_isaxa_" # NAME
+      : ClangBuiltin<"__builtin_riscv_isaxa_" # NAME>,
+        Intrinsic<ret_types,param_types,intr_properties>;
+  }
+
+  defm ro : ISAXAIntrinsic<[llvm_i32_ty],
+                           [llvm_ptr_ty],
+                           [IntrReadMem]>;
+  defm wo : ISAXAIntrinsic<[llvm_ptr_ty],
+                           [llvm_ptr_ty,llvm_i32_ty],
+                           [IntrWriteMem]>;
+  defm rw : ISAXAIntrinsic<[llvm_ptr_ty],
+                           [llvm_ptr_ty,llvm_ptr_ty],
+                           [IntrArgMemOnly]>;
+
+} // TargetPrefix = "riscv"

@@ -1686,3 +1686,36 @@ include "RISCVInstrInfoZk.td"
 include "RISCVInstrInfoV.td"
 include "RISCVInstrInfoZfh.td"
 include "RISCVInstrInfoZicbo.td"
+
+//===----------------------------------------------------------------------===//
+// Define new ISAX instructions.
+//===----------------------------------------------------------------------===//
+
+
+let Predicates = [HasNonStdExtISAXA] in {
+
+  def RV_ISAXA_div_Inst
+    : RVInst<(outs GPR:$rddst, GPR:$rs1dst),
+             (ins GPR:$rd, GPR:$rs1),
+             "ISAXA.div", "$rd, $rs1",
+             [(set GPR:$rddst, GPR:$rs1dst, (int_riscv_isaxa_div GPR:$rd, GPR:$rs1))],
+             InstFormatOther>,
+      Sched<[]> {
+
+    let hasSideEffects = 0;
+    let mayLoad = 0;
+    let mayStore = 0;
+    let Constraints = "$rddst = $rd, $rs1dst = $rs1";
+
+    bits<5> rd;
+    bits<5> rs1;
+
+    let Inst{6-0} = 0b0101011;
+    let Inst{11-7} = rd;
+    let Inst{14-12} = 0b000;
+    let Inst{19-15} = rs1;
+    let Inst{24-20} = 0b00000;
+    let Inst{31-25} = 0b0000000;
+  }
+
+} // Predicates = [HasNonStdExtISAXA]

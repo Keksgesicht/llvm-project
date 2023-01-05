@@ -122,5 +122,7 @@ TARGET_BUILTIN(__builtin_riscv_sm4ks, "LiLiLiIUc", "nc", "zksed")
 TARGET_BUILTIN(__builtin_riscv_sm3p0, "LiLi", "nc", "zksh")
 TARGET_BUILTIN(__builtin_riscv_sm3p1, "LiLi", "nc", "zksh")
 
+TARGET_BUILTIN(__builtin_riscv_isaxa_div, "iii", "nc", "experimental-xisaxa")
+
 #undef BUILTIN
 #undef TARGET_BUILTIN

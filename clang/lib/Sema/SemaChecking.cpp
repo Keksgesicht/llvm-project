@@ -4399,6 +4399,9 @@ bool Sema::CheckRISCVBuiltinFunctionCall(const TargetInfo &TI,
     return true;
 
   switch (BuiltinID) {
+  case RISCV::BI__builtin_riscv_isaxa_imm:
+    return SemaBuiltinConstantArgRange(TheCall, 0, 0, (1<<4)-1)
+         | SemaBuiltinConstantArgRange(TheCall, 1, 0, (1<<13)-1);
   case RISCVVector::BI__builtin_rvv_vsetvli:
     return SemaBuiltinConstantArgRange(TheCall, 1, 0, 3) ||
            CheckRISCVLMUL(TheCall, 2);

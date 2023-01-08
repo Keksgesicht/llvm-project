@@ -181,6 +181,20 @@ def uimmlog2xlen : Operand<XLenVT>, ImmLeaf<XLenVT, [{
   let OperandNamespace = "RISCVOp";
 }
 
+def uimm13 : Operand<XLenVT>, ImmLeaf<XLenVT, [{return isUInt<13>(Imm);}]> {
+  let ParserMatchClass = UImmAsmOperand<13>;
+  let DecoderMethod = "decodeUImmOperand<13>";
+  let OperandType = "OPERAND_UIMM13";
+  let OperandNamespace = "RISCVOp";
+}
+
+def uimm4 : Operand<XLenVT>, ImmLeaf<XLenVT, [{return isUInt<4>(Imm);}]> {
+  let ParserMatchClass = UImmAsmOperand<4>;
+  let DecoderMethod = "decodeUImmOperand<4>";
+  let OperandType = "OPERAND_UIMM4";
+  let OperandNamespace = "RISCVOp";
+}
+
 def uimm2 : Operand<XLenVT> {
   let ParserMatchClass = UImmAsmOperand<2>;
   let DecoderMethod = "decodeUImmOperand<2>";
@@ -1686,3 +1700,36 @@ include "RISCVInstrInfoZk.td"
 include "RISCVInstrInfoV.td"
 include "RISCVInstrInfoZfh.td"
 include "RISCVInstrInfoZicbo.td"
+
+//===----------------------------------------------------------------------===//
+// Define new ISAX instructions.
+//===----------------------------------------------------------------------===//
+
+
+let Predicates = [HasNonStdExtISAXA] in {
+
+  def RV_ISAXA_imm_Inst
+    : RVInst<(outs GPR:$rd),
+             (ins uimm4:$imm4, uimm13:$imm13),
+             "ISAXA.imm", "$rd, $imm4, $imm13",
+             [(set GPR:$rd, (int_riscv_isaxa_imm uimm4:$imm4, uimm13:$imm13))],
+             InstFormatOther>,
+      Sched<[]> {
+
+    let hasSideEffects = 0;
+    let mayLoad = 0;
+    let mayStore = 0;
+    let Constraints = "";
+
+    bits<5> rd;
+    bits<4> imm4;
+    bits<13> imm13;
+
+    let Inst{6-0} = 0b0101011;
+    let Inst{11-7} = rd;
+    let Inst{14-12} = 0b000;
+    let Inst{18-15} = imm4;
+    let Inst{31-19} = imm13;
+  }
+
+} // Predicates = [HasNonStdExtISAXA]

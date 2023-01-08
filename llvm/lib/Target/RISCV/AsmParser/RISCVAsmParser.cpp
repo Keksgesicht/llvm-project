@@ -564,6 +564,8 @@ public:
     return IsConstantImm && isUInt<N>(Imm) && VK == RISCVMCExpr::VK_RISCV_None;
   }
 
+  bool isUImm13() { return IsUImm<13>(); }
+  bool isUImm4() { return IsUImm<4>(); }
   bool isUImm2() { return IsUImm<2>(); }
   bool isUImm3() { return IsUImm<3>(); }
   bool isUImm5() { return IsUImm<5>(); }

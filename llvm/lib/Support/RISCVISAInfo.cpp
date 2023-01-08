@@ -104,6 +104,7 @@ static const RISCVSupportedExtension SupportedExtensions[] = {
 };
 
 static const RISCVSupportedExtension SupportedExperimentalExtensions[] = {
+    {"xisaxa", RISCVExtensionVersion{0, 1}},
     {"zbe", RISCVExtensionVersion{0, 93}},
     {"zbf", RISCVExtensionVersion{0, 93}},
     {"zbm", RISCVExtensionVersion{0, 93}},

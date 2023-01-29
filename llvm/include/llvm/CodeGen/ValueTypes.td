@@ -226,6 +226,10 @@ def externref : ValueType<0,    182>;  // WebAssembly's externref type
 def x86amx    : ValueType<8192, 183>;  // X86 AMX value
 def i64x8     : ValueType<512,  184>;  // 8 Consecutive GPRs (AArch64)
 
+def i48       : ValueType<48,   185>;  // 48-bit integer value
+def i25       : ValueType<25,   186>;  // 25-bit integer value
+def i18       : ValueType<18,   187>;  // 18-bit integer value
+
 def token      : ValueType<0, 248>;  // TokenTy
 def MetadataVT : ValueType<0, 249>;  // Metadata
 

@@ -1686,3 +1686,81 @@ include "RISCVInstrInfoZk.td"
 include "RISCVInstrInfoV.td"
 include "RISCVInstrInfoZfh.td"
 include "RISCVInstrInfoZicbo.td"
+
+//===----------------------------------------------------------------------===//
+// Define new ISAX instructions.
+//===----------------------------------------------------------------------===//
+
+
+let Predicates = [HasNonStdExtISAXA] in {
+
+  def RV_ISAXA_ld_Inst
+    : RVInst<(outs ISAXACUSTRC:$rd),
+             (ins GPR:$rs1),
+             "ISAXA.ld", "$rd, $rs1",
+             [(set ISAXACUSTRC:$rd, (int_riscv_isaxa_ld GPR:$rs1))],
+             InstFormatOther>,
+      Sched<[]> {
+
+    let hasSideEffects = 0;
+    let mayLoad = 0;
+    let mayStore = 0;
+    let Constraints = "";
+
+    bits<2> rd;
+    bits<5> rs1;
+
+    let Inst{6-0} = 0b0101011;
+    let Inst{8-7} = rd;
+    let Inst{14-9} = 0b000000;
+    let Inst{19-15} = rs1;
+    let Inst{31-20} = 0b000000000000;
+  }
+
+  def RV_ISAXA_op_Inst
+    : RVInst<(outs ISAXACUSTRC:$rd),
+             (ins ISAXACUSTRC:$rs1),
+             "ISAXA.op", "$rd, $rs1",
+             [(set ISAXACUSTRC:$rd, (int_riscv_isaxa_op ISAXACUSTRC:$rs1))],
+             InstFormatOther>,
+      Sched<[]> {
+
+    let hasSideEffects = 0;
+    let mayLoad = 0;
+    let mayStore = 0;
+    let Constraints = "";
+
+    bits<2> rd;
+    bits<2> rs1;
+
+    let Inst{6-0} = 0b0101011;
+    let Inst{8-7} = rd;
+    let Inst{14-9} = 0b001000;
+    let Inst{16-15} = rs1;
+    let Inst{31-17} = 0b000000000001000;
+  }
+
+  def RV_ISAXA_st_Inst
+    : RVInst<(outs GPR:$rd),
+             (ins ISAXACUSTRC:$rs1),
+             "ISAXA.st", "$rd, $rs1",
+             [(set GPR:$rd, (int_riscv_isaxa_st ISAXACUSTRC:$rs1))],
+             InstFormatOther>,
+      Sched<[]> {
+
+    let hasSideEffects = 0;
+    let mayLoad = 0;
+    let mayStore = 0;
+    let Constraints = "";
+
+    bits<5> rd;
+    bits<2> rs1;
+
+    let Inst{6-0} = 0b0101011;
+    let Inst{11-7} = rd;
+    let Inst{14-12} = 0b010;
+    let Inst{16-15} = rs1;
+    let Inst{31-17} = 0b000000000010000;
+  }
+
+} // Predicates = [HasNonStdExtISAXA]

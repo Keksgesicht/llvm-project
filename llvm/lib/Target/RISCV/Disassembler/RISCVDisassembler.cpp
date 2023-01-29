@@ -58,6 +58,39 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeRISCVDisassembler() {
                                          createRISCVDisassembler);
 }
 
+static DecodeStatus DecodeISAXAEXTRARCRegisterClass(MCInst &Inst, uint64_t RegNo,
+                                              uint64_t Address,
+                                              const MCDisassembler *Decoder) {
+    if (RegNo >= 4)
+        return MCDisassembler::Fail;
+
+    MCRegister Reg = RISCV::ISAXAEXTRAR0 + RegNo;
+    Inst.addOperand(MCOperand::createReg(Reg));
+    return MCDisassembler::Success;
+}
+
+static DecodeStatus DecodeISAXACUSTRCRegisterClass(MCInst &Inst, uint64_t RegNo,
+                                              uint64_t Address,
+                                              const MCDisassembler *Decoder) {
+    if (RegNo >= 4)
+        return MCDisassembler::Fail;
+
+    MCRegister Reg = RISCV::ISAXACUSTR0 + RegNo;
+    Inst.addOperand(MCOperand::createReg(Reg));
+    return MCDisassembler::Success;
+}
+
+static DecodeStatus DecodeISAXAACCRCRegisterClass(MCInst &Inst, uint64_t RegNo,
+                                              uint64_t Address,
+                                              const MCDisassembler *Decoder) {
+    if (RegNo >= 4)
+        return MCDisassembler::Fail;
+
+    MCRegister Reg = RISCV::ISAXAACCR0 + RegNo;
+    Inst.addOperand(MCOperand::createReg(Reg));
+    return MCDisassembler::Success;
+}
+
 static DecodeStatus DecodeGPRRegisterClass(MCInst &Inst, uint64_t RegNo,
                                            uint64_t Address,
                                            const MCDisassembler *Decoder) {

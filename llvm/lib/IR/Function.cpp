@@ -990,6 +990,9 @@ enum IIT_Info {
   IIT_ANYPTR_TO_ELT = 56,
   IIT_I2 = 57,
   IIT_I4 = 58,
+  IIT_I48 = 59,
+  IIT_I25 = 60,
+  IIT_I18 = 61,
 };
 
 static void DecodeIITType(unsigned &NextElt, ArrayRef<unsigned char> Infos,
@@ -1003,6 +1006,15 @@ static void DecodeIITType(unsigned &NextElt, ArrayRef<unsigned char> Infos,
   unsigned StructElts = 2;
 
   switch (Info) {
+  case IIT_I48:
+    OutputTable.push_back(IITDescriptor::get(IITDescriptor::Integer,48));
+    return;
+  case IIT_I25:
+    OutputTable.push_back(IITDescriptor::get(IITDescriptor::Integer,25));
+    return;
+  case IIT_I18:
+    OutputTable.push_back(IITDescriptor::get(IITDescriptor::Integer,18));
+    return;
   case IIT_Done:
     OutputTable.push_back(IITDescriptor::get(IITDescriptor::Void, 0));
     return;

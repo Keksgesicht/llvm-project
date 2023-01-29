@@ -434,6 +434,13 @@ def HasStdExtZicbop : Predicate<"Subtarget->hasStdExtZicbop()">,
                                 AssemblerPredicate<(all_of FeatureStdExtZicbop),
                                 "'Zicbop' (Cache-Block Prefetch Instructions)">;
 
+def FeatureNonStdExtISAXA
+  : SubtargetFeature<"experimental-xisaxa", "HasNonStdExtISAXA", "true",
+                     "ISAXA (non-standard extension)">;
+def HasNonStdExtISAXA : Predicate<"Subtarget->hasNonStdExtISAXA()">,
+                        AssemblerPredicate<(all_of FeatureNonStdExtISAXA),
+                        "ISAXA Instruction Set">;
+
 def Feature64Bit
     : SubtargetFeature<"64bit", "HasRV64", "true", "Implements RV64">;
 def IsRV64 : Predicate<"Subtarget->is64Bit()">,

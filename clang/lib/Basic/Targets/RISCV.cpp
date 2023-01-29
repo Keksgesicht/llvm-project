@@ -161,6 +161,9 @@ void RISCVTargetInfo::getTargetDefines(const LangOptions &Opts,
   if (ISAInfo->hasExtension("m") || ISAInfo->hasExtension("zmmul"))
     Builder.defineMacro("__riscv_mul");
 
+  if (ISAInfo->hasExtension("xisaxa"))
+    Builder.defineMacro("__riscv_isaxa");
+
   if (ISAInfo->hasExtension("m")) {
     Builder.defineMacro("__riscv_div");
     Builder.defineMacro("__riscv_muldiv");

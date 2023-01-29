@@ -92,6 +92,11 @@ RISCVTargetLowering::RISCVTargetLowering(const TargetMachine &TM,
     addRegisterClass(MVT::f32, &RISCV::FPR32RegClass);
   if (Subtarget.hasStdExtD())
     addRegisterClass(MVT::f64, &RISCV::FPR64RegClass);
+  if (Subtarget.hasNonStdExtISAXA()) {
+    addRegisterClass(MVT::i18, &RISCV::ISAXAEXTRARCRegClass);
+    addRegisterClass(MVT::i25, &RISCV::ISAXACUSTRCRegClass);
+    addRegisterClass(MVT::i48, &RISCV::ISAXAACCRCRegClass);
+  }
 
   static const MVT::SimpleValueType BoolVecVTs[] = {
       MVT::nxv1i1,  MVT::nxv2i1,  MVT::nxv4i1, MVT::nxv8i1,

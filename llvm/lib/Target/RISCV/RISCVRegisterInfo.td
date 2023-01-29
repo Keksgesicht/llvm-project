@@ -602,3 +602,36 @@ def AnyReg : RegisterClass<"RISCV", [untyped], 32,
                                 (sequence "V%u", 0, 31))> {
   let Size = 32;
 }
+
+let RegAltNameIndices = [ABIRegAltName] in {
+  def ISAXAEXTRAR0 : RISCVReg<0, "isaxaextrar0", ["isaxaextrar0"]>, DwarfRegNum<[-1]>;
+  def ISAXAEXTRAR1 : RISCVReg<1, "isaxaextrar1", ["isaxaextrar1"]>, DwarfRegNum<[-1]>;
+  def ISAXAEXTRAR2 : RISCVReg<2, "isaxaextrar2", ["isaxaextrar2"]>, DwarfRegNum<[-1]>;
+  def ISAXAEXTRAR3 : RISCVReg<3, "isaxaextrar3", ["isaxaextrar3"]>, DwarfRegNum<[-1]>;
+}
+
+def ISAXAEXTRARC : RegisterClass<"RISCV", [i18], 32, (add
+  (sequence "ISAXAEXTRAR%u", 0, 3)
+)>;
+
+let RegAltNameIndices = [ABIRegAltName] in {
+  def ISAXACUSTR0 : RISCVReg<0, "isaxacustr0", ["isaxacustr0"]>, DwarfRegNum<[-1]>;
+  def ISAXACUSTR1 : RISCVReg<1, "isaxacustr1", ["isaxacustr1"]>, DwarfRegNum<[-1]>;
+  def ISAXACUSTR2 : RISCVReg<2, "isaxacustr2", ["isaxacustr2"]>, DwarfRegNum<[-1]>;
+  def ISAXACUSTR3 : RISCVReg<3, "isaxacustr3", ["isaxacustr3"]>, DwarfRegNum<[-1]>;
+}
+
+def ISAXACUSTRC : RegisterClass<"RISCV", [i25], 32, (add
+  (sequence "ISAXACUSTR%u", 0, 3)
+)>;
+
+let RegAltNameIndices = [ABIRegAltName] in {
+  def ISAXAACCR0 : RISCVReg<0, "isaxaaccr0", ["isaxaaccr0"]>, DwarfRegNum<[-1]>;
+  def ISAXAACCR1 : RISCVReg<1, "isaxaaccr1", ["isaxaaccr1"]>, DwarfRegNum<[-1]>;
+  def ISAXAACCR2 : RISCVReg<2, "isaxaaccr2", ["isaxaaccr2"]>, DwarfRegNum<[-1]>;
+  def ISAXAACCR3 : RISCVReg<3, "isaxaaccr3", ["isaxaaccr3"]>, DwarfRegNum<[-1]>;
+}
+
+def ISAXAACCRC : RegisterClass<"RISCV", [i48], 64, (add
+  (sequence "ISAXAACCR%u", 0, 3)
+)>;

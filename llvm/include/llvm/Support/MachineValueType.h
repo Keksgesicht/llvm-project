@@ -279,9 +279,12 @@ namespace llvm {
       externref      = 182,    // WebAssembly's externref type
       x86amx         = 183,    // This is an X86 AMX value
       i64x8          = 184,    // 8 Consecutive GPRs (AArch64)
+      i48            = 185,    // 48-bit integer value
+      i25            = 186,    // 25-bit integer value
+      i18            = 187,    // 18-bit integer value
 
       FIRST_VALUETYPE =  1,    // This is always the beginning of the list.
-      LAST_VALUETYPE = i64x8,  // This always remains at the end of the list.
+      LAST_VALUETYPE = i18,  // This always remains at the end of the list.
       VALUETYPE_SIZE = LAST_VALUETYPE + 1,
 
       // This is the current maximum for LAST_VALUETYPE.
@@ -361,13 +364,19 @@ namespace llvm {
               (SimpleTy >= MVT::FIRST_INTEGER_FIXEDLEN_VECTOR_VALUETYPE &&
                SimpleTy <= MVT::LAST_INTEGER_FIXEDLEN_VECTOR_VALUETYPE) ||
               (SimpleTy >= MVT::FIRST_INTEGER_SCALABLE_VECTOR_VALUETYPE &&
-               SimpleTy <= MVT::LAST_INTEGER_SCALABLE_VECTOR_VALUETYPE));
+               SimpleTy <= MVT::LAST_INTEGER_SCALABLE_VECTOR_VALUETYPE) ||
+               SimpleTy == MVT::i48 ||
+               SimpleTy == MVT::i25 ||
+               SimpleTy == MVT::i18);
     }
 
     /// Return true if this is an integer, not including vectors.
     bool isScalarInteger() const {
-      return (SimpleTy >= MVT::FIRST_INTEGER_VALUETYPE &&
-              SimpleTy <= MVT::LAST_INTEGER_VALUETYPE);
+      return ((SimpleTy >= MVT::FIRST_INTEGER_VALUETYPE &&
+               SimpleTy <= MVT::LAST_INTEGER_VALUETYPE) ||
+               SimpleTy == MVT::i48 ||
+               SimpleTy == MVT::i25 ||
+               SimpleTy == MVT::i18);
     }
 
     /// Return true if this is a vector value type.
@@ -886,6 +895,9 @@ namespace llvm {
         llvm_unreachable("getSizeInBits called on extended MVT.");
       case Other:
         llvm_unreachable("Value type is non-standard value, Other.");
+      case i48: return TypeSize::Fixed(48);
+      case i25: return TypeSize::Fixed(25);
+      case i18: return TypeSize::Fixed(18);
       case iPTR:
         llvm_unreachable("Value type size is target-dependent. Ask TLI.");
       case iPTRAny:
@@ -1194,6 +1206,12 @@ namespace llvm {
       switch (BitWidth) {
       default:
         return (MVT::SimpleValueType)(MVT::INVALID_SIMPLE_VALUE_TYPE);
+      case 48:
+        return MVT::i48;
+      case 25:
+        return MVT::i25;
+      case 18:
+        return MVT::i18;
       case 1:
         return MVT::i1;
       case 2:
